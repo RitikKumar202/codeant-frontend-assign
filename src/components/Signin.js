@@ -8,18 +8,16 @@ const MainInfoCard = () => (
             <h2 className='text-lg font-bold text-[#081735]'>AI to Detect & Autofix Bad Code</h2>
         </div>
         <div className='flex gap-8 items-center justify-center p-5'>
-            <div className='flex flex-col items-center'>
-                <h4 className='text-lg font-bold text-[#081735]'>30+</h4>
-                <p className='text-sm font-normal text-[#171717]'>Language Support</p>
-            </div>
-            <div className='flex flex-col items-center'>
-                <h4 className='text-lg font-bold text-[#081735]'>10K+</h4>
-                <p className='text-sm font-normal text-[#171717]'>Developers</p>
-            </div>
-            <div className='flex flex-col items-center'>
-                <h4 className='text-lg font-bold text-[#081735]'>100K+</h4>
-                <p className='text-sm font-normal text-[#171717]'>Hours Saved</p>
-            </div>
+            {[
+                { label: 'Language Support', value: '30+' },
+                { label: 'Developers', value: '10K+' },
+                { label: 'Hours Saved', value: '100K+' },
+            ].map(({ label, value }) => (
+                <div key={label} className='flex flex-col items-center'>
+                    <h4 className='text-lg font-bold text-[#081735]'>{value}</h4>
+                    <p className='text-sm font-normal text-[#171717]'>{label}</p>
+                </div>
+            ))}
         </div>
     </div>
 );
@@ -55,6 +53,34 @@ const options = {
     ],
 };
 
+const SigninTabs = ({ activeTab, setActiveTab }) => (
+    <div className="flex border border-[#E9EAEB] mx-6 rounded-lg justify-center bg-[#FAFAFA]">
+        {['SAAS', 'Self Hosted'].map((tab) => (
+            <button
+                key={tab}
+                className={`w-1/2 py-2 rounded-lg text-sm md:text-lg text-center font-semibold ${activeTab === tab ? 'bg-[#1570EF] text-white' : 'text-[#414651]'
+                    }`}
+                onClick={() => setActiveTab(tab)}
+            >
+                {tab}
+            </button>
+        ))}
+    </div>
+);
+
+const SigninOptions = ({ activeTab, handleSignin }) => (
+    <div className="flex flex-col gap-2 items-center pt-6 px-6 border-t border-t[#D5D7DA]">
+        {options[activeTab].map((option, index) => (
+            <button
+                onClick={handleSignin}
+                key={index}
+                className="w-full md:w-[400px] text-sm md:text-base font-semibold flex items-center justify-center py-2 border rounded-md text-gray-700 hover:bg-gray-50"
+            >
+                <img src={option.icon} alt={option.label} className="h-4 md:h-5 mr-2" /> {option.label}
+            </button>
+        ))}
+    </div>
+);
 
 const SigninContainer = ({ activeTab, setActiveTab, handleSignin }) => (
     <div className="w-full md:w-[600px] h-[460px] bg-white border border-[#E9EAEB] rounded-xl py-5">
@@ -70,34 +96,9 @@ const SigninContainer = ({ activeTab, setActiveTab, handleSignin }) => (
                 </div>
                 <h1 className="text-xl md:text-[28px] text-center font-semibold">Welcome to CodeAnt AI</h1>
             </div>
-            <div className="flex border border-[#E9EAEB] mx-6 rounded-lg justify-center bg-[#FAFAFA]">
-                <button
-                    className={`w-1/2 py-2 rounded-lg text-sm md:text-lg text-center font-semibold ${activeTab === 'SAAS' ? 'bg-[#1570EF] text-[#fff]' : 'text-[#414651]'
-                        }`}
-                    onClick={() => setActiveTab('SAAS')}
-                >
-                    SAAS
-                </button>
-                <button
-                    className={`w-1/2 py-2 rounded-lg text-sm md:text-lg text-center font-semibold ${activeTab === 'Self Hosted' ? 'bg-[#1570EF] text-[#fff]' : 'text-[#414651]'
-                        }`}
-                    onClick={() => setActiveTab('Self Hosted')}
-                >
-                    Self Hosted
-                </button>
-            </div>
+            <SigninTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <div className="flex flex-col gap-2 items-center pt-6 px-6 border-t border-t[#D5D7DA]">
-            {options[activeTab].map((option, index) => (
-                <button
-                    onClick={handleSignin}
-                    key={index}
-                    className="w-full md:w-[400px] text-sm md:text-base font-semibold flex items-center justify-center py-2 border rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                    <img src={option.icon} alt={option.label} className="h-4 md:h-5 mr-2" /> {option.label}
-                </button>
-            ))}
-        </div>
+        <SigninOptions activeTab={activeTab} handleSignin={handleSignin} />
     </div>
 );
 
@@ -131,7 +132,7 @@ const Signin = ({ onLogin }) => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Signin;
