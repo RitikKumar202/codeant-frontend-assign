@@ -84,7 +84,7 @@ const Repository = () => {
                                     {repo.language}
                                     <div className='w-2 h-2 bg-[#1570EF] rounded-full'></div>
                                 </div>
-                                <div className='flex items-center gap-2'><PiDatabase /> {repo.size}</div>
+                                <div className='flex items-center gap-1 md:gap-2'><PiDatabase /> {repo.size}</div>
                                 <div>
                                     <span>Updated {repo.updated}</span>
                                 </div>
